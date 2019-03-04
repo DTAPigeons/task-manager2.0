@@ -20,7 +20,7 @@ namespace TaskManager.DataAccess {
             return entities.ToList();
         }
 
-        public Project GetById(int id) {
+        public Project GetById(int id) {         
             return entities.Where(entity => entity.ProjectId == id).FirstOrDefault();
         }
 
@@ -28,9 +28,14 @@ namespace TaskManager.DataAccess {
         ///<para>Gets a list of projects that meet the specified filters</para>
         ///<para>If you want to ignore a filter type pass null as it's value</para>
         ///</summary>
-        public List<Project> GetAllWithFilters(DateTime? startDate=null, DateTime? endDate = null, int? userId = null, string projectName = null) {
+        public List<Project> GetAllWithFilters(DateTime? startDateBefore = null,
+                                               DateTime? startDateAfter = null, 
+                                               DateTime? endDateBefore = null,
+                                               DateTime? endDateAfter = null,
+                                               int? userId = null,
+                                               string projectName = null) {
+            /*
             ParameterExpression parameter = Expression.Parameter(typeof(Project), "project");
-
             Expression startDateExpression = GetDateExpresion(startDate, "StartDate", parameter);
             Expression endDateExpression = GetDateExpresion(endDate, "EndDate", parameter);
             Expression employeeIdExpresion = Expression.Constant(true);
@@ -39,8 +44,37 @@ namespace TaskManager.DataAccess {
             Expression firstResult = Expression.And(startDateExpression, endDateExpression);
             Expression secondResult = Expression.And(firstResult, employeeIdExpresion);
             Expression finalResult = Expression.And(secondResult, projectNameExpresion);
+            */
 
-            return GetAllWithFilterExpresion(Expression.Lambda<Func<Project, bool>>(finalResult, parameter));
+            IQueryable<Project> projects = entities.Where(project=>project.ProjectId!=-1);
+
+            if (startDateBefore != null) {
+                projects = projects.Where(project => project.StartDate <= startDateBefore);
+            }
+
+            if(startDateAfter != null) {
+                projects = projects.Where(project=>project.StartDate >= startDateAfter);
+            }
+
+            if(endDateBefore != null) {
+                projects = projects.Where(project => project.EndDate <= endDateBefore);
+            }
+
+            if(endDateAfter != null) {
+                projects = projects.Where(project => project.EndDate >= endDateAfter);
+            }
+
+            if (userId != null) {
+                projects = projects.Where(project => project.ProjectLog.Any(log => log.UserId == userId));
+            }
+
+            if (projectName != null && projectName!="") {
+                projects = projects.Where(project => project.Name.ToLower().Contains(projectName.ToLower()));
+            }
+
+            return projects.ToList();
+
+           // return GetAllWithFilterExpresion(Expression.Lambda<Func<Project, bool>>(finalResult, parameter));
         }
 
         private Expression GetDateExpresion(DateTime? date, string propertyName, ParameterExpression parameter) {

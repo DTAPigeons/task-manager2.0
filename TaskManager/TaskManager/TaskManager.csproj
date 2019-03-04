@@ -61,12 +61,6 @@
       <DependentUpon>TaskManagerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DataAccess\CompanyRepository.cs" />
-    <Compile Include="DataAccess\Entities\BaseEntity.cs" />
-    <Compile Include="DataAccess\Entities\CompanyEntity.cs" />
-    <Compile Include="DataAccess\Entities\ProjectEntity.cs" />
-    <Compile Include="DataAccess\Entities\ProjectLogEntity.cs" />
-    <Compile Include="DataAccess\Entities\ScreenShotEntity.cs" />
-    <Compile Include="DataAccess\Entities\UserEntity.cs" />
     <Compile Include="DataAccess\ProjectLogRepository.cs" />
     <Compile Include="DataAccess\ProjectRepository.cs" />
     <Compile Include="DataAccess\ScreenShotRepository.cs" />
@@ -118,6 +112,7 @@
     <Compile Include="Project.cs">
       <DependentUpon>TaskManagerModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ProjectExtension.cs" />
     <Compile Include="ProjectLog.cs">
       <DependentUpon>TaskManagerModel.tt</DependentUpon>
     </Compile>
@@ -143,6 +138,7 @@
     <Compile Include="User.cs">
       <DependentUpon>TaskManagerModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="UserExtension.cs" />
     <EmbeddedResource Include="Forms\CompanyRegForm.resx">
       <DependentUpon>CompanyRegForm.cs</DependentUpon>
     </EmbeddedResource>
