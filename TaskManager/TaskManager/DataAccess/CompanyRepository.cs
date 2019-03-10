@@ -44,5 +44,10 @@ namespace TaskManager.DataAccess {
             entities.Remove(company);
             Context.SaveChanges();
         }
+
+        public bool CompanyNameIsTaken(string name) {
+            Company comapany = entities.Where(entitie => entitie.Name == name).FirstOrDefault();
+            return comapany != null;
+        }
     }
 }
