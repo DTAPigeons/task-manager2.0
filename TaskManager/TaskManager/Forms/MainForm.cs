@@ -132,7 +132,6 @@ namespace TaskManager
         {
             PauseWorkOnProject();
             SelectProjectForWork(currentProject);
-            ResetTimer();
         }
 
 
@@ -145,7 +144,6 @@ namespace TaskManager
         {
             PauseWorkOnProject(true);
             EnterAddingNewProjectState();
-            ResetTimer();
         }
 
         private void EnterAddingNewProjectState() {
@@ -176,6 +174,7 @@ namespace TaskManager
 
         private void ResetProjectsGrid() {
             Company selectedCompany = companyRepository.GetById(((Company)CompaniesComboBox.SelectedItem).CompanyId);
+            companyRepository.Update(selectedCompany);
             projectBindingSource.DataSource = selectedCompany.Project;
         }
 
@@ -184,14 +183,14 @@ namespace TaskManager
             if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn &&
         e.RowIndex >= 0) {
                 Project project = projectGridView.Rows[e.RowIndex].DataBoundItem as Project;
-                PauseWorkOnProject();
+                if(state==MainFormState.WorkingOnProjectState) PauseWorkOnProject();
                 SelectProjectForWork(project);
             }
         }
 
         private void PauseWorkOnProject(bool stopWorkOnProject = false) {
-            if (state != MainFormState.WorkingOnProjectState) { return; }
             if (currentProject == null) { throw new Exception("No project selected"); }
+            if (state == MainFormState.WorkingOnProjectState) { 
             ProjectLog log = new ProjectLog();
             log.ProjectId = currentProject.ProjectId;
             log.StartDate = LastTimeStarted;
@@ -200,10 +199,12 @@ namespace TaskManager
             log.Description = descriptionTextBox.Text;
             projectLogRepository.Save(log);
             currentProject.EndDate = log.EndDate;
+        }
             currentProject.IsInProgress = !stopWorkOnProject;
             projectRepository.Save(currentProject);
             state = MainFormState.ProjectPausedState;
             ResetProjectsGrid();
+            ResetTimer();
         }
 
         private void SelectProjectForWork(Project project) {
@@ -213,6 +214,13 @@ namespace TaskManager
             state = MainFormState.ProjectPausedState;
             SetEnabledForProjectButtons(true, false, true);
             ResetProjectsGrid();
+        }
+
+        private void addProjectButton_Click(object sender, EventArgs e) {
+            if (state == MainFormState.WorkingOnProjectState) {
+                PauseWorkOnProject();
+            }
+            EnterAddingNewProjectState();
         }
     }
 

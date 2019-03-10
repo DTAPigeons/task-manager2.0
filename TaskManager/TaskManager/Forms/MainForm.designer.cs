@@ -53,6 +53,7 @@
             this.endDateDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.isInProgressDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.projectBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.addProjectButton = new System.Windows.Forms.Button();
             this.toolStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.projectGridView)).BeginInit();
@@ -113,6 +114,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.addProjectButton);
             this.panel1.Controls.Add(this.projectNameTextBox);
             this.panel1.Controls.Add(this.projectGridView);
             this.panel1.Controls.Add(this.StopButton);
@@ -283,6 +285,16 @@
             // 
             this.projectBindingSource.DataSource = typeof(TaskManager.Project);
             // 
+            // addProjectButton
+            // 
+            this.addProjectButton.Location = new System.Drawing.Point(507, 50);
+            this.addProjectButton.Name = "addProjectButton";
+            this.addProjectButton.Size = new System.Drawing.Size(161, 23);
+            this.addProjectButton.TabIndex = 15;
+            this.addProjectButton.Text = "Добавяне на проект";
+            this.addProjectButton.UseVisualStyleBackColor = true;
+            this.addProjectButton.Click += new System.EventHandler(this.addProjectButton_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -331,5 +343,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn endDateDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn isInProgressDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewButtonColumn Select;
+        private System.Windows.Forms.Button addProjectButton;
     }
 }
