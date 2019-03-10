@@ -28,7 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.projectsListView = new System.Windows.Forms.DataGridView();
+            this.projectBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.searchButton = new System.Windows.Forms.Button();
             this.clearSearchButton = new System.Windows.Forms.Button();
             this.startedBeforeLable = new System.Windows.Forms.Label();
@@ -43,27 +45,34 @@
             this.endedBeforeDatePicker = new System.Windows.Forms.DateTimePicker();
             this.endedAfterDatePicker = new System.Windows.Forms.DateTimePicker();
             this.userComboBox = new System.Windows.Forms.ComboBox();
-            this.NameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DateStartColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DateEndColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.startDateDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.endDateDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.projectDetailsButton = new System.Windows.Forms.DataGridViewButtonColumn();
             ((System.ComponentModel.ISupportInitialize)(this.projectsListView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.projectBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // projectsListView
             // 
+            this.projectsListView.AutoGenerateColumns = false;
             this.projectsListView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.projectsListView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.NameColumn,
-            this.DateStartColumn,
-            this.DateEndColumn,
+            this.nameDataGridViewTextBoxColumn,
+            this.startDateDataGridViewTextBoxColumn,
+            this.endDateDataGridViewTextBoxColumn,
             this.projectDetailsButton});
+            this.projectsListView.DataSource = this.projectBindingSource;
             this.projectsListView.Location = new System.Drawing.Point(-1, 176);
             this.projectsListView.Margin = new System.Windows.Forms.Padding(4);
             this.projectsListView.Name = "projectsListView";
             this.projectsListView.Size = new System.Drawing.Size(718, 383);
             this.projectsListView.TabIndex = 0;
             this.projectsListView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            // 
+            // projectBindingSource
+            // 
+            this.projectBindingSource.DataSource = typeof(TaskManager.Project);
             // 
             // searchButton
             // 
@@ -203,29 +212,30 @@
             this.userComboBox.Size = new System.Drawing.Size(132, 24);
             this.userComboBox.TabIndex = 23;
             // 
-            // NameColumn
+            // nameDataGridViewTextBoxColumn
             // 
-            this.NameColumn.HeaderText = "Име";
-            this.NameColumn.Name = "NameColumn";
-            this.NameColumn.ReadOnly = true;
+            this.nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
+            this.nameDataGridViewTextBoxColumn.HeaderText = "Name";
+            this.nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
             // 
-            // DateStartColumn
+            // startDateDataGridViewTextBoxColumn
             // 
-            this.DateStartColumn.HeaderText = "От";
-            this.DateStartColumn.Name = "DateStartColumn";
-            this.DateStartColumn.ReadOnly = true;
+            this.startDateDataGridViewTextBoxColumn.DataPropertyName = "StartDate";
+            this.startDateDataGridViewTextBoxColumn.HeaderText = "Start Date";
+            this.startDateDataGridViewTextBoxColumn.Name = "startDateDataGridViewTextBoxColumn";
             // 
-            // DateEndColumn
+            // endDateDataGridViewTextBoxColumn
             // 
-            this.DateEndColumn.HeaderText = "До";
-            this.DateEndColumn.Name = "DateEndColumn";
-            this.DateEndColumn.ReadOnly = true;
+            this.endDateDataGridViewTextBoxColumn.DataPropertyName = "EndDate";
+            this.endDateDataGridViewTextBoxColumn.HeaderText = "End Date";
+            this.endDateDataGridViewTextBoxColumn.Name = "endDateDataGridViewTextBoxColumn";
             // 
             // projectDetailsButton
             // 
             this.projectDetailsButton.HeaderText = "Детайли";
             this.projectDetailsButton.Name = "projectDetailsButton";
             this.projectDetailsButton.Text = "Детайли";
+            this.projectDetailsButton.UseColumnTextForButtonValue = true;
             // 
             // ReportsForm
             // 
@@ -253,6 +263,7 @@
             this.Name = "ReportsForm";
             this.Text = "Отчети";
             ((System.ComponentModel.ISupportInitialize)(this.projectsListView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.projectBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -275,9 +286,10 @@
         private System.Windows.Forms.DateTimePicker endedBeforeDatePicker;
         private System.Windows.Forms.DateTimePicker endedAfterDatePicker;
         private System.Windows.Forms.ComboBox userComboBox;
-        private System.Windows.Forms.DataGridViewTextBoxColumn NameColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn DateStartColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn DateEndColumn;
+        private System.Windows.Forms.BindingSource projectBindingSource;
+        private System.Windows.Forms.DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn startDateDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn endDateDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewButtonColumn projectDetailsButton;
     }
 }

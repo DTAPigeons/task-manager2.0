@@ -33,7 +33,6 @@ namespace TaskManager
             endedBeforeDatePicker.Value = DateTime.Now;
         }
 
-        //маркира задача отговаряща на критериите в таблицата
         private void SearchButton_Click(object sender, EventArgs e)
         {
             DateTime? startBeforeDate = startedBeforeDatePicker.Value;
@@ -51,13 +50,15 @@ namespace TaskManager
         }
 
         private void PopulateProjectList(List<Project> projects) {
-            projectsListView.Rows.Clear();
-            foreach (Project project in projects) {
-                projectsListView.Rows.Add(project.Name, project.StartDate, project.EndDate, project.ProjectId);
-            }
+            projectBindingSource.DataSource = projects;
+
+
+            //projectsListView.Rows.Clear();
+            //foreach (Project project in projects) {
+            //    projectsListView.Rows.Add(project.Name, project.StartDate, project.EndDate, project.ProjectId);
+            //}
         }
 
-        //става активен при селектиране на задача от таблицата, отваря отделна форма за избрания проект
         private void ClearSearchButton_Click(object sender, EventArgs e){
             startedBeforeDatePicker.Value = DateTime.Now;
             endedBeforeDatePicker.Value = DateTime.Now;
@@ -80,7 +81,11 @@ namespace TaskManager
             var senderGrid = (DataGridView)sender;
             if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn &&
         e.RowIndex >= 0) {
-                DetailsButtonClicked((int)senderGrid.Rows[e.RowIndex].Cells[e.ColumnIndex].Value);
+
+                Project proj = projectsListView.Rows[e.RowIndex].DataBoundItem as Project;
+
+                MessageBox.Show(proj.Name);
+                //DetailsButtonClicked((int)senderGrid.Rows[e.RowIndex].Cells[e.ColumnIndex].Value);
             }
         }
     }
