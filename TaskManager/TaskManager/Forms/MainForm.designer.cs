@@ -36,10 +36,8 @@
             this.CompanyLabel = new System.Windows.Forms.Label();
             this.TaskLabel = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.NameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.TimeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.StatusColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.projectNameTextBox = new System.Windows.Forms.TextBox();
+            this.projectGridView = new System.Windows.Forms.DataGridView();
             this.StopButton = new System.Windows.Forms.Button();
             this.PauseButton = new System.Windows.Forms.Button();
             this.StartButton = new System.Windows.Forms.Button();
@@ -49,10 +47,16 @@
             this.descriptionTextBox = new System.Windows.Forms.TextBox();
             this.CompanyAddbutton = new System.Windows.Forms.Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.projectNameTextBox = new System.Windows.Forms.TextBox();
+            this.Select = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.startDateDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.endDateDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.isInProgressDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.projectBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.toolStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.projectGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.projectBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // toolStrip1
@@ -81,10 +85,11 @@
             this.CompaniesComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.CompaniesComboBox.FormattingEnabled = true;
             this.CompaniesComboBox.Location = new System.Drawing.Point(103, 16);
-            this.CompaniesComboBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.CompaniesComboBox.Margin = new System.Windows.Forms.Padding(4);
             this.CompaniesComboBox.Name = "CompaniesComboBox";
             this.CompaniesComboBox.Size = new System.Drawing.Size(381, 24);
             this.CompaniesComboBox.TabIndex = 1;
+            this.CompaniesComboBox.SelectedIndexChanged += new System.EventHandler(this.CompaniesComboBox_SelectedIndexChanged);
             // 
             // CompanyLabel
             // 
@@ -109,7 +114,7 @@
             // panel1
             // 
             this.panel1.Controls.Add(this.projectNameTextBox);
-            this.panel1.Controls.Add(this.dataGridView1);
+            this.panel1.Controls.Add(this.projectGridView);
             this.panel1.Controls.Add(this.StopButton);
             this.panel1.Controls.Add(this.PauseButton);
             this.panel1.Controls.Add(this.StartButton);
@@ -123,50 +128,41 @@
             this.panel1.Controls.Add(this.CompaniesComboBox);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 27);
-            this.panel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(671, 638);
             this.panel1.TabIndex = 4;
             // 
-            // dataGridView1
+            // projectNameTextBox
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.NameColumn,
-            this.TimeColumn,
-            this.StatusColumn});
-            this.dataGridView1.Location = new System.Drawing.Point(0, 320);
-            this.dataGridView1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(671, 314);
-            this.dataGridView1.TabIndex = 13;
+            this.projectNameTextBox.Location = new System.Drawing.Point(103, 51);
+            this.projectNameTextBox.Name = "projectNameTextBox";
+            this.projectNameTextBox.Size = new System.Drawing.Size(381, 22);
+            this.projectNameTextBox.TabIndex = 14;
             // 
-            // NameColumn
+            // projectGridView
             // 
-            this.NameColumn.HeaderText = "Име";
-            this.NameColumn.Name = "NameColumn";
-            this.NameColumn.ReadOnly = true;
-            this.NameColumn.Width = 209;
-            // 
-            // TimeColumn
-            // 
-            this.TimeColumn.HeaderText = "Време";
-            this.TimeColumn.Name = "TimeColumn";
-            this.TimeColumn.ReadOnly = true;
-            this.TimeColumn.Width = 125;
-            // 
-            // StatusColumn
-            // 
-            this.StatusColumn.HeaderText = "Статус";
-            this.StatusColumn.Name = "StatusColumn";
-            this.StatusColumn.ReadOnly = true;
-            this.StatusColumn.Width = 125;
+            this.projectGridView.AutoGenerateColumns = false;
+            this.projectGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.projectGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.nameDataGridViewTextBoxColumn,
+            this.startDateDataGridViewTextBoxColumn,
+            this.endDateDataGridViewTextBoxColumn,
+            this.isInProgressDataGridViewTextBoxColumn,
+            this.Select});
+            this.projectGridView.DataSource = this.projectBindingSource;
+            this.projectGridView.Location = new System.Drawing.Point(0, 320);
+            this.projectGridView.Margin = new System.Windows.Forms.Padding(4);
+            this.projectGridView.Name = "projectGridView";
+            this.projectGridView.Size = new System.Drawing.Size(671, 314);
+            this.projectGridView.TabIndex = 13;
+            this.projectGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // StopButton
             // 
             this.StopButton.Enabled = false;
             this.StopButton.Location = new System.Drawing.Point(533, 208);
-            this.StopButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.StopButton.Margin = new System.Windows.Forms.Padding(4);
             this.StopButton.Name = "StopButton";
             this.StopButton.Size = new System.Drawing.Size(100, 28);
             this.StopButton.TabIndex = 12;
@@ -178,7 +174,7 @@
             // 
             this.PauseButton.Enabled = false;
             this.PauseButton.Location = new System.Drawing.Point(533, 160);
-            this.PauseButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.PauseButton.Margin = new System.Windows.Forms.Padding(4);
             this.PauseButton.Name = "PauseButton";
             this.PauseButton.Size = new System.Drawing.Size(100, 28);
             this.PauseButton.TabIndex = 11;
@@ -189,7 +185,7 @@
             // StartButton
             // 
             this.StartButton.Location = new System.Drawing.Point(533, 113);
-            this.StartButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.StartButton.Margin = new System.Windows.Forms.Padding(4);
             this.StartButton.Name = "StartButton";
             this.StartButton.Size = new System.Drawing.Size(100, 28);
             this.StartButton.TabIndex = 10;
@@ -231,7 +227,7 @@
             // descriptionTextBox
             // 
             this.descriptionTextBox.Location = new System.Drawing.Point(103, 97);
-            this.descriptionTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.descriptionTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.descriptionTextBox.Multiline = true;
             this.descriptionTextBox.Name = "descriptionTextBox";
             this.descriptionTextBox.Size = new System.Drawing.Size(381, 166);
@@ -240,7 +236,7 @@
             // CompanyAddbutton
             // 
             this.CompanyAddbutton.Location = new System.Drawing.Point(507, 14);
-            this.CompanyAddbutton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.CompanyAddbutton.Margin = new System.Windows.Forms.Padding(4);
             this.CompanyAddbutton.Name = "CompanyAddbutton";
             this.CompanyAddbutton.Size = new System.Drawing.Size(161, 28);
             this.CompanyAddbutton.TabIndex = 4;
@@ -252,12 +248,40 @@
             // 
             this.timer1.Tick += new System.EventHandler(this.TimerTick);
             // 
-            // projectNameTextBox
+            // Select
             // 
-            this.projectNameTextBox.Location = new System.Drawing.Point(103, 51);
-            this.projectNameTextBox.Name = "projectNameTextBox";
-            this.projectNameTextBox.Size = new System.Drawing.Size(381, 22);
-            this.projectNameTextBox.TabIndex = 14;
+            this.Select.HeaderText = "";
+            this.Select.Name = "Select";
+            this.Select.Text = "Select";
+            this.Select.UseColumnTextForButtonValue = true;
+            // 
+            // nameDataGridViewTextBoxColumn
+            // 
+            this.nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
+            this.nameDataGridViewTextBoxColumn.HeaderText = "Name";
+            this.nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
+            // 
+            // startDateDataGridViewTextBoxColumn
+            // 
+            this.startDateDataGridViewTextBoxColumn.DataPropertyName = "StartDate";
+            this.startDateDataGridViewTextBoxColumn.HeaderText = "Start Date";
+            this.startDateDataGridViewTextBoxColumn.Name = "startDateDataGridViewTextBoxColumn";
+            // 
+            // endDateDataGridViewTextBoxColumn
+            // 
+            this.endDateDataGridViewTextBoxColumn.DataPropertyName = "EndDate";
+            this.endDateDataGridViewTextBoxColumn.HeaderText = "End Date";
+            this.endDateDataGridViewTextBoxColumn.Name = "endDateDataGridViewTextBoxColumn";
+            // 
+            // isInProgressDataGridViewTextBoxColumn
+            // 
+            this.isInProgressDataGridViewTextBoxColumn.DataPropertyName = "IsInProgress";
+            this.isInProgressDataGridViewTextBoxColumn.HeaderText = "Is In Progress";
+            this.isInProgressDataGridViewTextBoxColumn.Name = "isInProgressDataGridViewTextBoxColumn";
+            // 
+            // projectBindingSource
+            // 
+            this.projectBindingSource.DataSource = typeof(TaskManager.Project);
             // 
             // MainForm
             // 
@@ -267,7 +291,7 @@
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.toolStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.Text = "Task Manager";
@@ -275,7 +299,8 @@
             this.toolStrip1.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.projectGridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.projectBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -297,11 +322,14 @@
         private System.Windows.Forms.Label TimeLabel;
         private System.Windows.Forms.Label DescriptionLabel;
         private System.Windows.Forms.Timer timer1;
-        private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn NameColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn TimeColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn StatusColumn;
+        private System.Windows.Forms.DataGridView projectGridView;
         private System.Windows.Forms.ToolStripButton ReportstoolStripButton;
         private System.Windows.Forms.TextBox projectNameTextBox;
+        private System.Windows.Forms.BindingSource projectBindingSource;
+        private System.Windows.Forms.DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn startDateDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn endDateDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn isInProgressDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewButtonColumn Select;
     }
 }
