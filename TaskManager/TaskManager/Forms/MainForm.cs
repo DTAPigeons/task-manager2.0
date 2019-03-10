@@ -14,16 +14,22 @@ namespace TaskManager
 {
     public partial class MainForm : Form
     {
-        TimeSpan ElapsedTime;
-        DateTime LastTimeElapsed;
-        DateTime LastTimeStarted;
+        readonly TimeSpan SCREEN_SHOT_INTERVAL = new TimeSpan(0, 0, 10);
+        const string DEFAULT_SCREEN_SHOT_FOLDER = @"H:\Uni\TaskManager\ScreenShots";
+
+        TimeSpan screenShotTimer;
+        TimeSpan elapsedTime;
+        DateTime lastTimeElapsed;
+        DateTime lastTimeStarted;
+        DateTime lastScreenShotTime;
         CompanyRepository companyRepository;
         ProjectLogRepository projectLogRepository;
         ProjectRepository projectRepository;
+        ScreenShotRepository screenShotRepository;
         MainFormState state;
         Project currentProject;
         int loggedInUserId;
-
+        List<Bitmap> screenShots= new List<Bitmap>();
 
         public MainForm(int loggedInUserId = 1)
         {
@@ -31,6 +37,7 @@ namespace TaskManager
             companyRepository = new CompanyRepository();
             projectLogRepository = new ProjectLogRepository();
             projectRepository = new ProjectRepository();
+            screenShotRepository = new ScreenShotRepository();
             InitializeComponent();
             foreach(Company company in companyRepository.GetAll()) {
                 CompaniesComboBox.Items.Add(company);
@@ -57,10 +64,21 @@ namespace TaskManager
         //TIMER
         public void TimerTick(object sender, EventArgs e)
         {
-            ElapsedTime += DateTime.Now - LastTimeElapsed;
-            LastTimeElapsed = DateTime.Now;
+            elapsedTime += DateTime.Now - lastTimeElapsed;
+            screenShotTimer += DateTime.Now - lastTimeElapsed;
 
-            TIMER.Text = Convert.ToString(new TimeSpan(ElapsedTime.Hours, ElapsedTime.Minutes, ElapsedTime.Seconds));
+            if (screenShotTimer.Seconds >= SCREEN_SHOT_INTERVAL.Seconds) {
+                Bitmap screenShot = new Bitmap(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height);
+                Graphics graphics = Graphics.FromImage(screenShot as Image);
+                graphics.CopyFromScreen(0, 0, 0, 0, screenShot.Size);
+                screenShots.Add(screenShot);
+                screenShotTimer = TimeSpan.Zero;
+                lastScreenShotTime = DateTime.Now;
+            }
+
+            lastTimeElapsed = DateTime.Now;
+
+            TIMER.Text = Convert.ToString(new TimeSpan(elapsedTime.Hours, elapsedTime.Minutes, elapsedTime.Seconds));
         }
 
         /*
@@ -85,7 +103,7 @@ namespace TaskManager
             }
 
             SetEnabledForProjectButtons(false, true, true);
-            LastTimeElapsed = DateTime.Now;
+            lastTimeElapsed = DateTime.Now;
         }
 
         private bool ValidInputFields() {
@@ -111,11 +129,12 @@ namespace TaskManager
         }
 
         private void EnterWorkingOnProjectState(string description="") {
+            screenShots.Clear();
             if(currentProject == null) { throw new Exception("No project selected"); }
             SetEnabledForProjectButtons(false, true, true);
             descriptionTextBox.Text = description;
             state = MainFormState.WorkingOnProjectState;
-            LastTimeStarted = DateTime.Now;
+            ResetTimer();
             timer1.Enabled = true;
             currentProject.IsInProgress = true;
         }
@@ -158,7 +177,10 @@ namespace TaskManager
 
         private void ResetTimer() {
             timer1.Enabled = false;
-            ElapsedTime = TimeSpan.Zero;
+            elapsedTime = TimeSpan.Zero;
+            screenShotTimer = TimeSpan.Zero;
+            lastTimeStarted = DateTime.Now;
+            lastScreenShotTime = DateTime.Now;
             TIMER.Text = ("00:00:00");
         }
 
@@ -193,18 +215,39 @@ namespace TaskManager
             if (state == MainFormState.WorkingOnProjectState) { 
             ProjectLog log = new ProjectLog();
             log.ProjectId = currentProject.ProjectId;
-            log.StartDate = LastTimeStarted;
+            log.StartDate = lastTimeStarted;
             log.EndDate = DateTime.Now;
+            ResetTimer();
             log.UserId = loggedInUserId;
             log.Description = descriptionTextBox.Text;
             projectLogRepository.Save(log);
             currentProject.EndDate = log.EndDate;
+            SaveScreenShots(log);
         }
             currentProject.IsInProgress = !stopWorkOnProject;
             projectRepository.Save(currentProject);
             state = MainFormState.ProjectPausedState;
             ResetProjectsGrid();
             ResetTimer();
+            screenShots.Clear();
+        }
+
+        private void SaveScreenShots(ProjectLog log) {
+            if(screenShots==null || screenShots.Count <= 0) { return; }
+            FolderBrowserDialog dialog = new FolderBrowserDialog();
+            dialog.SelectedPath = DEFAULT_SCREEN_SHOT_FOLDER;
+            dialog.Description = "Select where to save your screen shots";
+
+            if(dialog.ShowDialog() == DialogResult.OK && !string.IsNullOrWhiteSpace(dialog.SelectedPath)) {
+                foreach(Bitmap screenShot in screenShots) {
+                    string path = dialog.SelectedPath + @"\" + "Screen Shot_" + Guid.NewGuid() + ".png";
+                    screenShot.Save(path);
+                    Screenshots screenShotdata = new Screenshots();
+                    screenShotdata.Location = path;
+                    screenShotdata.ProjectLogId = log.ProjectLogId;
+                    screenShotRepository.Save(screenShotdata);
+                }
+            }
         }
 
         private void SelectProjectForWork(Project project) {

@@ -179,7 +179,7 @@
             <PropertyRef Name="ScreenshotId" />
           </Key>
           <Property Name="ScreenshotId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Location" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Location" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="TimeTaken" Type="DateTime" Precision="3" />
           <Property Name="ProjectLogId" Type="Int32" />
           <NavigationProperty Name="ProjectLog" Relationship="Self.FK_Screenshots_ProjectLog" FromRole="Screenshots" ToRole="ProjectLog" />
