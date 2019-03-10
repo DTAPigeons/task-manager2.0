@@ -175,7 +175,7 @@ namespace TaskManager
         }
 
         private void ResetProjectsGrid() {
-            Company selectedCompany = (Company)CompaniesComboBox.SelectedItem;
+            Company selectedCompany = companyRepository.GetById(((Company)CompaniesComboBox.SelectedItem).CompanyId);
             projectBindingSource.DataSource = selectedCompany.Project;
         }
 
