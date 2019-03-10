@@ -6,13 +6,11 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace TaskManager.DataAccess {
-    class ScreenShotRepository {
-        private TaskManagerEntities context;
+    class ScreenShotRepository: BaseRepository{
         private DbSet<Screenshots> entities;
 
         public ScreenShotRepository() {
-            context = new TaskManagerEntities();
-            entities = context.Set<Screenshots>();
+            entities = Context.Set<Screenshots>();
         }
 
         public List<Screenshots> GetAll() {
@@ -31,7 +29,7 @@ namespace TaskManager.DataAccess {
                 Update(screenShot);
             }
 
-            context.SaveChanges();
+            Context.SaveChanges();
         }
 
         public void Insert(Screenshots screenShot) {
@@ -39,12 +37,12 @@ namespace TaskManager.DataAccess {
         }
 
         public void Update(Screenshots screenShot) {
-            context.Entry(screenShot).State = EntityState.Modified;
+            Context.Entry(screenShot).State = EntityState.Modified;
         }
 
         public void Delete(Screenshots screenShot) {
             entities.Remove(screenShot);
-            context.SaveChanges();
+            Context.SaveChanges();
         }
     }
 }

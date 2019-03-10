@@ -61,6 +61,7 @@
       <DependentUpon>TaskManagerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="CompanyExtension.cs" />
+    <Compile Include="DataAccess\BaseRepository.cs" />
     <Compile Include="DataAccess\CompanyRepository.cs" />
     <Compile Include="DataAccess\ProjectLogRepository.cs" />
     <Compile Include="DataAccess\ProjectRepository.cs" />

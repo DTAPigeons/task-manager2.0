@@ -6,13 +6,11 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace TaskManager.DataAccess {
-    class CompanyRepository {
-        private TaskManagerEntities context;
+    class CompanyRepository:BaseRepository {
         private DbSet<Company> entities;
 
         public CompanyRepository() {
-            context = new TaskManagerEntities();
-            entities = context.Set<Company>();
+            entities = Context.Set<Company>();
         }
 
         public List<Company> GetAll() {
@@ -31,7 +29,7 @@ namespace TaskManager.DataAccess {
                 Update(company);
             }
 
-            context.SaveChanges();
+            Context.SaveChanges();
         }
 
         public void Insert(Company company) {
@@ -39,12 +37,12 @@ namespace TaskManager.DataAccess {
         }
 
         public void Update(Company company) {
-            context.Entry(company).State = EntityState.Modified;
+            Context.Entry(company).State = EntityState.Modified;
         }
 
         public void Delete(Company company) {
             entities.Remove(company);
-            context.SaveChanges();
+            Context.SaveChanges();
         }
     }
 }

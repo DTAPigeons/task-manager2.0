@@ -6,13 +6,11 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace TaskManager.DataAccess {
-    class UserRepository {
-        private TaskManagerEntities context;
+    class UserRepository: BaseRepository {
         private DbSet<User> entities;
 
         public UserRepository() {
-            context = new TaskManagerEntities();
-            entities = context.Set<User>();
+            entities = Context.Set<User>();
         }
 
         public List<User> GetAll() {
@@ -31,7 +29,7 @@ namespace TaskManager.DataAccess {
                 Update(user);
             }
 
-            context.SaveChanges();
+            Context.SaveChanges();
         }
 
         public void Insert(User user) {
@@ -39,12 +37,12 @@ namespace TaskManager.DataAccess {
         }
 
         public void Update(User user) {
-            context.Entry(user).State = EntityState.Modified;
+            Context.Entry(user).State = EntityState.Modified;
         }
 
         public void Delete(User user) {
             entities.Remove(user);
-            context.SaveChanges();
+            Context.SaveChanges();
         }
 
         public bool UserCanLogIn(string userName, string passWord) {

@@ -7,13 +7,11 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace TaskManager.DataAccess {
-    class ProjectRepository {
-        private TaskManagerEntities context;
+    class ProjectRepository : BaseRepository {
         private DbSet<Project> entities;
 
         public ProjectRepository() {
-            context = new TaskManagerEntities();
-            entities = context.Set<Project>();
+            entities = Context.Set<Project>();
         }
 
         public List<Project> GetAll() {
@@ -140,7 +138,7 @@ namespace TaskManager.DataAccess {
                 Update(project);
             }
 
-            context.SaveChanges();
+            Context.SaveChanges();
         }
 
         public void Insert(Project project) {
@@ -148,12 +146,12 @@ namespace TaskManager.DataAccess {
         }
 
         public void Update(Project project) {
-            context.Entry(project).State = EntityState.Modified;
+            Context.Entry(project).State = EntityState.Modified;
         }
 
         public void Delete(Project project) {
             entities.Remove(project);
-            context.SaveChanges();
+            Context.SaveChanges();
         }
     }
 }
