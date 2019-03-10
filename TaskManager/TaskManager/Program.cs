@@ -12,16 +12,9 @@ namespace TaskManager {
         /// </summary>
         [STAThread]
         static void Main() {
-            UserRepository users = new UserRepository();
-            ProjectRepository projects = new ProjectRepository();
-
-            List<Project> all = projects.GetAll();
-
-            List<Project> killers = projects.GetAllWithFilters(null, null, null, null, 2, "геноцид");
-
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new ReportsForm());
+            Application.Run(new MainForm());
         }
     }
 }

@@ -28,7 +28,6 @@ namespace TaskManager
             foreach(User user in users) {
                 userComboBox.Items.Add(user);
             }
-
             startedBeforeDatePicker.Value = DateTime.Now;
             endedBeforeDatePicker.Value = DateTime.Now;
         }

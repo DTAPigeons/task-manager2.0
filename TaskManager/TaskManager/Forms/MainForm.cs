@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
+using TaskManager.DataAccess;
 
 namespace TaskManager
 {
@@ -15,10 +16,30 @@ namespace TaskManager
     {
         TimeSpan ElapsedTime;
         DateTime LastElapsed;
+        CompanyRepository companyRepository;
+        ProjectLogRepository projectLogRepository;
+        ProjectRepository projectRepository;
+        MainFormState state;
+
 
         public MainForm()
         {
+            companyRepository = new CompanyRepository();
+            projectLogRepository = new ProjectLogRepository();
+            projectRepository = new ProjectRepository();
             InitializeComponent();
+            foreach(Company company in companyRepository.GetAll()) {
+                CompaniesComboBox.Items.Add(company);
+            }
+        }
+
+        private void EnterAddingNewProjectState() {
+            state = MainFormState.CreatingProjectState;
+            projectNameTextBox.Text = "";
+            projectNameTextBox.ReadOnly = false;
+            descriptionTextBox.Text = "";
+            SetEnabledForProjectButtons(true, false, false);
+
         }
 
         //Отваря формата за отчети
@@ -52,10 +73,35 @@ namespace TaskManager
         */
         private void StartButton_Click(object sender, EventArgs e)
         {
-            PauseButton.Enabled = true;
-            StopButton.Enabled = true;
-            timer1.Enabled = true;
+            if (state == MainFormState.CreatingProjectState) {
+                if (!ValidInputFields()) {
+                    MessageBox.Show("Invalid Input!");
+                    return;
+                }
+                AddNewProject();
+            }
+
+            SetEnabledForProjectButtons(false, true, true);
             LastElapsed = DateTime.Now;
+        }
+
+        private bool ValidInputFields() {
+            if (CompaniesComboBox.SelectedIndex < 0) {
+                return false;
+            }
+            if(projectNameTextBox.Text == null || projectNameTextBox.Text == "") {
+                return false;
+            }
+            return true;
+        }
+
+        private void AddNewProject() {
+            Project project = new Project();
+            project.Name = projectNameTextBox.Text;
+            project.CompanyId = ((Company)CompaniesComboBox.SelectedItem).CompanyId;
+            project.IsInProgress = true;
+            project.StartDate = DateTime.Now;
+            projectRepository.Save(project);
         }
 
         /*
@@ -78,14 +124,28 @@ namespace TaskManager
         */
         private void StopButton_Click(object sender, EventArgs e)
         {
-            StartButton.Enabled = true;
-            PauseButton.Enabled = false;
-            StopButton.Enabled = false;
+            SetEnabledForProjectButtons(true, false, false);
 
-            //спира таймера,  и го занулява
-            timer1.Enabled = false;
-            ElapsedTime = TimeSpan.Zero; 
-            TIMER.Text=("00:00:00");
+            ResetTimer();
         }
+
+        private void ResetTimer() {
+            timer1.Enabled = false;
+            ElapsedTime = TimeSpan.Zero;
+            TIMER.Text = ("00:00:00");
+        }
+
+        private void SetEnabledForProjectButtons(bool enableStartButton, bool enablePauseButton, bool enableStopButton) {
+            StartButton.Enabled = enableStartButton;
+            PauseButton.Enabled = enablePauseButton;
+            StopButton.Enabled = enableStopButton;
+        }
+    }
+
+    public enum MainFormState {
+        CreatingProjectState,
+        WorkingOnProjectState,
+        ProjectPausedState,
+        Count
     }
 }

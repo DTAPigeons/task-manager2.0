@@ -46,10 +46,10 @@
             this.TIMER = new System.Windows.Forms.Label();
             this.TimeLabel = new System.Windows.Forms.Label();
             this.DescriptionLabel = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.TasksComboBox = new System.Windows.Forms.ComboBox();
+            this.descriptionTextBox = new System.Windows.Forms.TextBox();
             this.CompanyAddbutton = new System.Windows.Forms.Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.projectNameTextBox = new System.Windows.Forms.TextBox();
             this.toolStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -57,11 +57,12 @@
             // 
             // toolStrip1
             // 
+            this.toolStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ReportstoolStripButton});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(503, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(671, 27);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -71,7 +72,7 @@
             this.ReportstoolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("ReportstoolStripButton.Image")));
             this.ReportstoolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.ReportstoolStripButton.Name = "ReportstoolStripButton";
-            this.ReportstoolStripButton.Size = new System.Drawing.Size(50, 22);
+            this.ReportstoolStripButton.Size = new System.Drawing.Size(61, 24);
             this.ReportstoolStripButton.Text = "Отчети";
             this.ReportstoolStripButton.Click += new System.EventHandler(this.ReportstoolStripButton_Click);
             // 
@@ -79,31 +80,35 @@
             // 
             this.CompaniesComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.CompaniesComboBox.FormattingEnabled = true;
-            this.CompaniesComboBox.Location = new System.Drawing.Point(77, 13);
+            this.CompaniesComboBox.Location = new System.Drawing.Point(103, 16);
+            this.CompaniesComboBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.CompaniesComboBox.Name = "CompaniesComboBox";
-            this.CompaniesComboBox.Size = new System.Drawing.Size(287, 21);
+            this.CompaniesComboBox.Size = new System.Drawing.Size(381, 24);
             this.CompaniesComboBox.TabIndex = 1;
             // 
             // CompanyLabel
             // 
             this.CompanyLabel.AutoSize = true;
-            this.CompanyLabel.Location = new System.Drawing.Point(15, 16);
+            this.CompanyLabel.Location = new System.Drawing.Point(20, 20);
+            this.CompanyLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.CompanyLabel.Name = "CompanyLabel";
-            this.CompanyLabel.Size = new System.Drawing.Size(44, 13);
+            this.CompanyLabel.Size = new System.Drawing.Size(54, 17);
             this.CompanyLabel.TabIndex = 2;
             this.CompanyLabel.Text = "Фирма";
             // 
             // TaskLabel
             // 
             this.TaskLabel.AutoSize = true;
-            this.TaskLabel.Location = new System.Drawing.Point(15, 46);
+            this.TaskLabel.Location = new System.Drawing.Point(20, 57);
+            this.TaskLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.TaskLabel.Name = "TaskLabel";
-            this.TaskLabel.Size = new System.Drawing.Size(44, 13);
+            this.TaskLabel.Size = new System.Drawing.Size(56, 17);
             this.TaskLabel.TabIndex = 3;
             this.TaskLabel.Text = "Проект";
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.projectNameTextBox);
             this.panel1.Controls.Add(this.dataGridView1);
             this.panel1.Controls.Add(this.StopButton);
             this.panel1.Controls.Add(this.PauseButton);
@@ -111,16 +116,16 @@
             this.panel1.Controls.Add(this.TIMER);
             this.panel1.Controls.Add(this.TimeLabel);
             this.panel1.Controls.Add(this.DescriptionLabel);
-            this.panel1.Controls.Add(this.textBox1);
-            this.panel1.Controls.Add(this.TasksComboBox);
+            this.panel1.Controls.Add(this.descriptionTextBox);
             this.panel1.Controls.Add(this.CompanyAddbutton);
             this.panel1.Controls.Add(this.TaskLabel);
             this.panel1.Controls.Add(this.CompanyLabel);
             this.panel1.Controls.Add(this.CompaniesComboBox);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(0, 25);
+            this.panel1.Location = new System.Drawing.Point(0, 27);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(503, 515);
+            this.panel1.Size = new System.Drawing.Size(671, 638);
             this.panel1.TabIndex = 4;
             // 
             // dataGridView1
@@ -130,9 +135,10 @@
             this.NameColumn,
             this.TimeColumn,
             this.StatusColumn});
-            this.dataGridView1.Location = new System.Drawing.Point(0, 260);
+            this.dataGridView1.Location = new System.Drawing.Point(0, 320);
+            this.dataGridView1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(503, 255);
+            this.dataGridView1.Size = new System.Drawing.Size(671, 314);
             this.dataGridView1.TabIndex = 13;
             // 
             // NameColumn
@@ -159,9 +165,10 @@
             // StopButton
             // 
             this.StopButton.Enabled = false;
-            this.StopButton.Location = new System.Drawing.Point(400, 169);
+            this.StopButton.Location = new System.Drawing.Point(533, 208);
+            this.StopButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.StopButton.Name = "StopButton";
-            this.StopButton.Size = new System.Drawing.Size(75, 23);
+            this.StopButton.Size = new System.Drawing.Size(100, 28);
             this.StopButton.TabIndex = 12;
             this.StopButton.Text = "Стоп";
             this.StopButton.UseVisualStyleBackColor = true;
@@ -170,9 +177,10 @@
             // PauseButton
             // 
             this.PauseButton.Enabled = false;
-            this.PauseButton.Location = new System.Drawing.Point(400, 130);
+            this.PauseButton.Location = new System.Drawing.Point(533, 160);
+            this.PauseButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.PauseButton.Name = "PauseButton";
-            this.PauseButton.Size = new System.Drawing.Size(75, 23);
+            this.PauseButton.Size = new System.Drawing.Size(100, 28);
             this.PauseButton.TabIndex = 11;
             this.PauseButton.Text = "Пауза";
             this.PauseButton.UseVisualStyleBackColor = true;
@@ -180,9 +188,10 @@
             // 
             // StartButton
             // 
-            this.StartButton.Location = new System.Drawing.Point(400, 92);
+            this.StartButton.Location = new System.Drawing.Point(533, 113);
+            this.StartButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.StartButton.Name = "StartButton";
-            this.StartButton.Size = new System.Drawing.Size(75, 23);
+            this.StartButton.Size = new System.Drawing.Size(100, 28);
             this.StartButton.TabIndex = 10;
             this.StartButton.Text = "Старт";
             this.StartButton.UseVisualStyleBackColor = true;
@@ -192,51 +201,48 @@
             // 
             this.TIMER.AutoSize = true;
             this.TIMER.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.TIMER.Location = new System.Drawing.Point(78, 224);
+            this.TIMER.Location = new System.Drawing.Point(104, 276);
+            this.TIMER.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.TIMER.Name = "TIMER";
-            this.TIMER.Size = new System.Drawing.Size(127, 33);
+            this.TIMER.Size = new System.Drawing.Size(164, 42);
             this.TIMER.TabIndex = 9;
             this.TIMER.Text = "00:00:00";
             // 
             // TimeLabel
             // 
             this.TimeLabel.AutoSize = true;
-            this.TimeLabel.Location = new System.Drawing.Point(32, 231);
+            this.TimeLabel.Location = new System.Drawing.Point(43, 284);
+            this.TimeLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.TimeLabel.Name = "TimeLabel";
-            this.TimeLabel.Size = new System.Drawing.Size(40, 13);
+            this.TimeLabel.Size = new System.Drawing.Size(50, 17);
             this.TimeLabel.TabIndex = 8;
             this.TimeLabel.Text = "Време";
             // 
             // DescriptionLabel
             // 
             this.DescriptionLabel.AutoSize = true;
-            this.DescriptionLabel.Location = new System.Drawing.Point(12, 82);
+            this.DescriptionLabel.Location = new System.Drawing.Point(16, 101);
+            this.DescriptionLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.DescriptionLabel.Name = "DescriptionLabel";
-            this.DescriptionLabel.Size = new System.Drawing.Size(60, 13);
+            this.DescriptionLabel.Size = new System.Drawing.Size(78, 17);
             this.DescriptionLabel.TabIndex = 7;
             this.DescriptionLabel.Text = "Описание:";
             // 
-            // textBox1
+            // descriptionTextBox
             // 
-            this.textBox1.Location = new System.Drawing.Point(77, 79);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(287, 136);
-            this.textBox1.TabIndex = 6;
-            // 
-            // TasksComboBox
-            // 
-            this.TasksComboBox.FormattingEnabled = true;
-            this.TasksComboBox.Location = new System.Drawing.Point(77, 43);
-            this.TasksComboBox.Name = "TasksComboBox";
-            this.TasksComboBox.Size = new System.Drawing.Size(287, 21);
-            this.TasksComboBox.TabIndex = 5;
+            this.descriptionTextBox.Location = new System.Drawing.Point(103, 97);
+            this.descriptionTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.descriptionTextBox.Multiline = true;
+            this.descriptionTextBox.Name = "descriptionTextBox";
+            this.descriptionTextBox.Size = new System.Drawing.Size(381, 166);
+            this.descriptionTextBox.TabIndex = 6;
             // 
             // CompanyAddbutton
             // 
-            this.CompanyAddbutton.Location = new System.Drawing.Point(380, 11);
+            this.CompanyAddbutton.Location = new System.Drawing.Point(507, 14);
+            this.CompanyAddbutton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.CompanyAddbutton.Name = "CompanyAddbutton";
-            this.CompanyAddbutton.Size = new System.Drawing.Size(121, 23);
+            this.CompanyAddbutton.Size = new System.Drawing.Size(161, 28);
             this.CompanyAddbutton.TabIndex = 4;
             this.CompanyAddbutton.Text = "Добавяне на фирма";
             this.CompanyAddbutton.UseVisualStyleBackColor = true;
@@ -246,14 +252,22 @@
             // 
             this.timer1.Tick += new System.EventHandler(this.TimerTick);
             // 
+            // projectNameTextBox
+            // 
+            this.projectNameTextBox.Location = new System.Drawing.Point(103, 51);
+            this.projectNameTextBox.Name = "projectNameTextBox";
+            this.projectNameTextBox.Size = new System.Drawing.Size(381, 22);
+            this.projectNameTextBox.TabIndex = 14;
+            // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(503, 540);
+            this.ClientSize = new System.Drawing.Size(671, 665);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.toolStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.Text = "Task Manager";
@@ -275,8 +289,7 @@
         private System.Windows.Forms.Label TaskLabel;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button CompanyAddbutton;
-        private System.Windows.Forms.ComboBox TasksComboBox;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox descriptionTextBox;
         private System.Windows.Forms.Button StopButton;
         private System.Windows.Forms.Button PauseButton;
         private System.Windows.Forms.Button StartButton;
@@ -289,5 +302,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn TimeColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn StatusColumn;
         private System.Windows.Forms.ToolStripButton ReportstoolStripButton;
+        private System.Windows.Forms.TextBox projectNameTextBox;
     }
 }
