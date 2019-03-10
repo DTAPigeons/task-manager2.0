@@ -77,7 +77,7 @@ namespace TaskManager
                 AddNewProject();
                 EnterWorkingOnProjectState(descriptionTextBox.Text);
             }
-            if(state == MainFormState.ProjectPausedState) {
+            else if(state == MainFormState.ProjectPausedState) {
                 EnterWorkingOnProjectState();
             }
             else {
@@ -107,6 +107,7 @@ namespace TaskManager
             project.EndDate = DateTime.Now;
             projectRepository.Save(project);
             SelectProjectForWork(project);
+            ResetProjectsGrid();
         }
 
         private void EnterWorkingOnProjectState(string description="") {
@@ -170,6 +171,10 @@ namespace TaskManager
         }
 
         private void CompaniesComboBox_SelectedIndexChanged(object sender, EventArgs e) {
+            ResetProjectsGrid();
+        }
+
+        private void ResetProjectsGrid() {
             Company selectedCompany = (Company)CompaniesComboBox.SelectedItem;
             projectBindingSource.DataSource = selectedCompany.Project;
         }
@@ -198,6 +203,7 @@ namespace TaskManager
             currentProject.IsInProgress = !stopWorkOnProject;
             projectRepository.Save(currentProject);
             state = MainFormState.ProjectPausedState;
+            ResetProjectsGrid();
         }
 
         private void SelectProjectForWork(Project project) {
@@ -206,6 +212,7 @@ namespace TaskManager
             projectNameTextBox.ReadOnly = true;
             state = MainFormState.ProjectPausedState;
             SetEnabledForProjectButtons(true, false, true);
+            ResetProjectsGrid();
         }
     }
 
