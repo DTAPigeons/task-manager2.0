@@ -21,6 +21,10 @@ namespace TaskManager.DataAccess {
             return entities.Where(entity => entity.UserId == id).FirstOrDefault();
         }
 
+        public User GetByUsername(string userName) {
+            return entities.Where(entity => entity.Username == userName).FirstOrDefault();
+        }
+
         public void Save(User user) {
             if (user.UserId <= 0) {
                 Insert(user);
