@@ -51,11 +51,6 @@ namespace TaskManager
         private void PopulateProjectList(List<Project> projects) {
             projectBindingSource.DataSource = projects;
 
-
-            //projectsListView.Rows.Clear();
-            //foreach (Project project in projects) {
-            //    projectsListView.Rows.Add(project.Name, project.StartDate, project.EndDate, project.ProjectId);
-            //}
         }
 
         private void ClearSearchButton_Click(object sender, EventArgs e){

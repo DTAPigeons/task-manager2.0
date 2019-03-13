@@ -22,6 +22,7 @@ namespace TaskManager
         //След проверка в базата прави запис на нов потребител(ако е валидна)
         private void RegisterButton_Click(object sender, EventArgs e) {
             UserRepository userRepository = null;
+            userRepository = new UserRepository();
             User user = new User();
             user.Username = UsernameTextBox.Text;
             user.Password = PasswordTextBox.Text;
