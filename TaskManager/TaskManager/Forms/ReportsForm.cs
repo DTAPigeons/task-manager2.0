@@ -77,8 +77,8 @@ namespace TaskManager
         e.RowIndex >= 0) {
 
                 Project proj = projectsListView.Rows[e.RowIndex].DataBoundItem as Project;
-
-                MessageBox.Show(proj.Name);
+                DetailsReportForm detailsForm = new DetailsReportForm(proj);
+                detailsForm.Show();
                 //DetailsButtonClicked((int)senderGrid.Rows[e.RowIndex].Cells[e.ColumnIndex].Value);
             }
         }

@@ -63,10 +63,10 @@
             this.endDateDataGridViewTextBoxColumn,
             this.projectDetailsButton});
             this.projectsListView.DataSource = this.projectBindingSource;
-            this.projectsListView.Location = new System.Drawing.Point(-1, 176);
+            this.projectsListView.Location = new System.Drawing.Point(-1, 175);
             this.projectsListView.Margin = new System.Windows.Forms.Padding(4);
             this.projectsListView.Name = "projectsListView";
-            this.projectsListView.Size = new System.Drawing.Size(718, 383);
+            this.projectsListView.Size = new System.Drawing.Size(815, 383);
             this.projectsListView.TabIndex = 0;
             this.projectsListView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
@@ -215,20 +215,26 @@
             // nameDataGridViewTextBoxColumn
             // 
             this.nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
-            this.nameDataGridViewTextBoxColumn.HeaderText = "Name";
+            this.nameDataGridViewTextBoxColumn.FillWeight = 120F;
+            this.nameDataGridViewTextBoxColumn.HeaderText = "Име";
             this.nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
+            this.nameDataGridViewTextBoxColumn.Width = 120;
             // 
             // startDateDataGridViewTextBoxColumn
             // 
             this.startDateDataGridViewTextBoxColumn.DataPropertyName = "StartDate";
-            this.startDateDataGridViewTextBoxColumn.HeaderText = "Start Date";
+            this.startDateDataGridViewTextBoxColumn.FillWeight = 120F;
+            this.startDateDataGridViewTextBoxColumn.HeaderText = "Започнат";
             this.startDateDataGridViewTextBoxColumn.Name = "startDateDataGridViewTextBoxColumn";
+            this.startDateDataGridViewTextBoxColumn.Width = 120;
             // 
             // endDateDataGridViewTextBoxColumn
             // 
             this.endDateDataGridViewTextBoxColumn.DataPropertyName = "EndDate";
-            this.endDateDataGridViewTextBoxColumn.HeaderText = "End Date";
+            this.endDateDataGridViewTextBoxColumn.FillWeight = 120F;
+            this.endDateDataGridViewTextBoxColumn.HeaderText = "Завършил";
             this.endDateDataGridViewTextBoxColumn.Name = "endDateDataGridViewTextBoxColumn";
+            this.endDateDataGridViewTextBoxColumn.Width = 120;
             // 
             // projectDetailsButton
             // 
@@ -241,7 +247,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(730, 554);
+            this.ClientSize = new System.Drawing.Size(816, 554);
             this.Controls.Add(this.userComboBox);
             this.Controls.Add(this.endedAfterDatePicker);
             this.Controls.Add(this.endedBeforeDatePicker);
